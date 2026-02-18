@@ -18,9 +18,9 @@
   "packageManager": "pnpm@10.11.0",
   "description": "",
   "dependencies": {
-    "@bsv/auth-express-middleware": "^2.0.0-beta.0",
-    "@bsv/sdk": "^2.0.0-beta.0",
-    "@bsv/wallet-toolbox-client": "^2.0.0-beta.1",
+    "@bsv/auth-express-middleware": "^2.0.4",
+    "@bsv/sdk": "^2.0.4",
+    "@bsv/wallet-toolbox-client": "^2.0.18",
     "body-parser": "^2.2.0",
     "dotenv": "^16.4.5",
     "express": "^5.1.0"
