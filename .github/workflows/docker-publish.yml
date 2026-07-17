@@ -56,3 +56,8 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.sha }}
             ghcr.io/${{ github.repository }}:${{ needs.get_tag.outputs.deployment_tag }}
+          # Read access to @bsv-blockchain-demos/float-balance-route on GitHub
+          # Packages. GITHUB_TOKEN works once this repo is granted Actions
+          # access on the package; PACKAGES_READ_TOKEN is the PAT fallback.
+          secrets: |
+            github_token=${{ secrets.PACKAGES_READ_TOKEN || secrets.GITHUB_TOKEN }}

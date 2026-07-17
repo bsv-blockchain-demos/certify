@@ -4,11 +4,17 @@ FROM node:20-alpine
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package.json package-lock.json ./
+# Copy package files (.npmrc routes the @bsv-blockchain-demos scope to
+# GitHub Packages for the float-balance-route dependency)
+COPY package.json package-lock.json .npmrc ./
 
-# Install dependencies
-RUN npm install --frozen-lockfile
+# Install dependencies. The registry token is a BuildKit secret so it never
+# lands in an image layer; the auth line is appended for the install and
+# stripped again within the same layer.
+RUN --mount=type=secret,id=github_token \
+    echo "//npm.pkg.github.com/:_authToken=$(cat /run/secrets/github_token)" >> .npmrc && \
+    npm install --frozen-lockfile && \
+    sed -i '/_authToken/d' .npmrc
 
 # Install TypeScript and tsx globally for building and running
 RUN npm install -g typescript tsx
