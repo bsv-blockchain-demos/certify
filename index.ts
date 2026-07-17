@@ -4,6 +4,7 @@ import { createAuthMiddleware } from '@bsv/auth-express-middleware'
 import { WalletClient, PrivateKey, KeyDeriver } from '@bsv/sdk'
 import { WalletStorageManager, Services, Wallet, StorageClient } from '@bsv/wallet-toolbox-client'
 import { signCertificate } from './signCertificate'
+import { createBalanceRoute } from '@bsv-blockchain-demos/float-balance-route'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -62,6 +63,19 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   }
 })
 app.use(bodyParser.json())
+
+// Float treasury monitoring: read-only balance route, mounted before the
+// mutual-auth middleware so the Float poller can reach it with its bearer
+// token. When FLOAT_BALANCE_TOKEN is not set the route does not exist.
+if (process.env.FLOAT_BALANCE_TOKEN) {
+  app.use(createBalanceRoute({
+    wallet,
+    appName: 'bsv-blockchain-demos/certify',
+    chain: CHAIN as 'main' | 'test',
+    token: process.env.FLOAT_BALANCE_TOKEN,
+    toolboxFastBalance: true,
+  }))
+}
 
 // 4. Apply the auth middleware globally (or to specific routes)
 app.use(authMiddleware)

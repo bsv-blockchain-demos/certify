@@ -18,6 +18,7 @@
   "packageManager": "pnpm@10.11.0",
   "description": "",
   "dependencies": {
+    "@bsv-blockchain-demos/float-balance-route": "^0.1.0",
     "@bsv/auth-express-middleware": "^2.0.4",
     "@bsv/sdk": "^2.0.4",
     "@bsv/wallet-toolbox-client": "^2.0.18",
