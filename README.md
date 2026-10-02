@@ -60,4 +60,4 @@ Authentication middleware also runs before `GET /health`. The container's unauth
 
 ## Licence
 
-The package manifest declares ISC. A separate licence file is not included.
+**Declared licence: ISC.** See [package.json](package.json). No standalone licence file is included in this repository.
